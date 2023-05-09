@@ -43,6 +43,10 @@ dependencies:
   carousel_slider: ^4.2.1
   # https://pub.dev/packages?q=shared_preferences
   shared_preferences: ^2.1.1
+  #https://pub.dev/packages/flutter_svg
+  flutter_svg: ^2.0.5
+  #https://pub.dev/packages/light/example
+  light: ^2.1.0
 
 dev_dependencies:
   flutter_test:
