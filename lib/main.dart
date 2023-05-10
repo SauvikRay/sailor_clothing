@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor_clothing/presentation/provider/theme_provider.dart';
-
-import 'config/theme/color_schemes.dart';
 import 'presentation/screens/demo_homepage.dart';
 
 void main() {
@@ -15,55 +14,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return  ScreenUtilInit(
+            designSize:const Size(360,690),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+           return  MultiProvider(
      
-      providers: [
-        ChangeNotifierProvider(create: (_)=>ThemeDataProvider())
-      ],
-      child:
-      
-      Consumer<ThemeDataProvider>(
+           providers: [
+            ChangeNotifierProvider(create: (_)=>ThemeDataProvider())
+           ],
+      child: Consumer<ThemeDataProvider>(
         builder:(context,themeProvider,child){
-          return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Sailor Clothing',
-        theme: themeProvider.originalTheme,
-        themeMode: ThemeMode.system,
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      );
-        }
-        )
-      
-    
-    
-    );
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Sailor Clothing',
+              theme: themeProvider.originalTheme,
+              themeMode: ThemeMode.system,
+              home: const MyHomePage(title: 'Sailor Cloathing'),
+           );
+         },
+      )
+   );
  
-  // return ChangeNotifierProvider(
+        }
+        );
+      
     
-  //   create:(_)=> ThemeDataProvider(),
-  //   builder:(context,child){
-  //   final themeProvider = Provider.of<ThemeDataProvider>(context);    
-  //            return MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       title: 'Sailor Clothing',
-  //       theme: themeProvider.originalTheme,
-  //       darkTheme: ThemeData.dark(),
-      
-  //       // themeMode: ThemeMode.dark,
-      
-  //       // ThemeData(
-  //       //   useMaterial3: true,
-  //       //   colorScheme: lightColorScheme
-          
-  //       // ),
-  //       // darkTheme:ThemeData(
-  //       //   useMaterial3: true,
-  //       //   colorScheme: darkColorScheme
-  //       // ),
-  //       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-  //     );
-  //       }
-  //       );
+    
+  
 
 
 

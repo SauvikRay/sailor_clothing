@@ -1,7 +1,8 @@
 
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:light/light.dart';
 import 'package:provider/provider.dart';
@@ -19,101 +20,57 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   
- String _luxString = 'Unknown';
-  late Light _light;
-  late StreamSubscription _subscription;
-
-  void onData(int luxValue) async {
-
-    print("Lux value: $luxValue");
-    if(luxValue>20){
-    setState(() {
-      dark=true;
-      _luxString = "$luxValue";
-    
-    });}else{
-      setState(() {
-           dark=false;
-         
-           
-      });
-    }
-  }
-
-  void stopListening() {
-    _subscription.cancel();
-  }
-
-  void startListening() {
-    _light = Light();
-    try {
-      _subscription = _light.lightSensorStream.listen(onData);
-    } on LightException catch (exception) {
-      print(exception);
-    }
-  }
-
 
 @override
   void initState() {
-    // TODO: implement initState
-    // initPlatformState();
+
     super.initState();
   }
-   Future<void> initPlatformState() async {
-    startListening();
-  }
-
  
+
 bool dark=false;
   @override
   Widget build(BuildContext context) {
-    final themeProvider= Provider.of<ThemeDataProvider>(context);
-   // themeProvider.initPlatformState();
+    final themeProvider= Provider.of<ThemeDataProvider>(context,listen: true);
     return Scaffold(
       appBar: AppBar(
-
-        title: Text(widget.title),
+        
+        centerTitle: true,
+        title: themeProvider.isDark ? SvgPicture.asset('assets/icons/sailor_dark.svg',height: 45.w) : SvgPicture.asset('assets/icons/sailor.svg',height: 45.w),
         actions: [
         
- Switch(
-            activeColor: lightColorScheme.inversePrimary,
-            activeThumbImage:AssetImage('assets/icons/off.png'),
-            inactiveThumbImage: AssetImage('assets/icons/on.png'),
-            
-            value: dark, 
-            onChanged: (value){
-           
-            setState(() {
-              dark = !dark;
-            });
-            themeProvider.darkTheme=dark;
-          }),
-          
+        Transform.rotate(
+          angle: pi/-2,
+          child: Switch(
+              activeColor: lightColorScheme.inversePrimary,
+              activeThumbImage:const AssetImage('assets/icons/off.png'),
+              inactiveThumbImage: const AssetImage('assets/icons/on.png'),
+              
+              value: dark, 
+              onChanged: (value){
+             
+              setState(() {
+                dark = !dark;
+              });
+              themeProvider.darkTheme = dark;
+            }),
+        ),
+        
 
         ],
       ),
-      body: Center(
-     
-        child: Column(
-       
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              'Lux value: ${themeProvider.luxValue}\n',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+
+          Text(
+            'Text Theme Big',
+            style: Theme.of(context).textTheme.titleLarge,
+          ), 
+
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+ 
     );
   }
 }
