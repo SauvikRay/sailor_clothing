@@ -1,12 +1,11 @@
 
-import 'dart:async';
-import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:light/light.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor_clothing/presentation/provider/theme_provider.dart';
+import 'package:sailor_clothing/utils/helpers/space_helper.dart';
 
 import '../../config/theme/color_schemes.dart';
 
@@ -34,28 +33,29 @@ bool dark=false;
     final themeProvider= Provider.of<ThemeDataProvider>(context,listen: true);
     return Scaffold(
       appBar: AppBar(
-        
         centerTitle: true,
         title: themeProvider.isDark ? SvgPicture.asset('assets/icons/sailor_dark.svg',height: 45.w) : SvgPicture.asset('assets/icons/sailor.svg',height: 45.w),
         actions: [
         
-        Transform.rotate(
-          angle: pi/-2,
-          child: Switch(
-              activeColor: lightColorScheme.inversePrimary,
-              activeThumbImage:const AssetImage('assets/icons/off.png'),
-              inactiveThumbImage: const AssetImage('assets/icons/on.png'),
-              
-              value: dark, 
-              onChanged: (value){
-             
-              setState(() {
-                dark = !dark;
-              });
-              themeProvider.darkTheme = dark;
-            }),
-        ),
-        
+            Switch(
+                activeColor: lightColorScheme.inversePrimary,
+                activeThumbImage:const AssetImage('assets/icons/off.png'),
+                inactiveThumbImage: const AssetImage('assets/icons/on.png'),
+                value: dark, 
+                onChanged: (value){
+                setState(() {
+                  dark = !dark;
+                });
+                themeProvider.darkTheme = dark;
+              }),
+        SpaceHelper.horizontalSpace(2.w),
+        IconButton(
+          splashRadius: 20,
+          onPressed: (){}, 
+          icon: const Icon(CupertinoIcons.search),
+          color: IconTheme.of(context).color,
+          
+          )
 
         ],
       ),

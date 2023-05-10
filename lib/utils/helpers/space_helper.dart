@@ -4,7 +4,8 @@ import 'package:sailor_clothing/config/theme/color_schemes.dart';
 
 
 /// Contains useful consts to reduce boilerplate and duplicate code
-class UIHelper {
+class SpaceHelper {
+  SpaceHelper._();
   // Vertical spacing constants. Adjust to your liking.
   static final double _verticalSpaceSmall = 10.0.w;
   static final double _verticalSpaceMedium = 20.0.w;
