@@ -34,7 +34,7 @@ bool dark=false;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: themeProvider.isDark ? SvgPicture.asset('assets/icons/sailor_dark.svg',height: 45.w) : SvgPicture.asset('assets/icons/sailor.svg',height: 45.w),
+        title: themeProvider.isDark ? SvgPicture.asset('assets/icons/sailor_dark.svg',height: 45,) : SvgPicture.asset('assets/icons/sailor.svg',height:45),
         actions: [
         
             Switch(
@@ -56,7 +56,7 @@ bool dark=false;
           color: IconTheme.of(context).color,
           
           )
-
+      
         ],
       ),
       body: Column(
