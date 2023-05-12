@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor_clothing/presentation/provider/theme_provider.dart';
-
-import 'config/theme/color_schemes.dart';
 import 'presentation/screens/demo_homepage.dart';
 
 void main() {

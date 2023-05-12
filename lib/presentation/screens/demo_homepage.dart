@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:light/light.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor_clothing/presentation/provider/theme_provider.dart';
@@ -68,8 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
 bool dark=false;
   @override
   Widget build(BuildContext context) {
-    final themeProvider= Provider.of<ThemeDataProvider>(context);
-   // themeProvider.initPlatformState();
+    final themeProvider= Provider.of<ThemeDataProvider>(context,listen: true);
+   themeProvider.initPlatformState();
+   dark = themeProvider.dark;
     return Scaffold(
       appBar: AppBar(
 
@@ -99,9 +99,7 @@ bool dark=false;
        
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+           
             Text(
               'Lux value: ${themeProvider.luxValue}\n',
               style: Theme.of(context).textTheme.headlineMedium,
