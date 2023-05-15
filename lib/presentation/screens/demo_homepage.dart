@@ -1,13 +1,13 @@
 
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:sailor_clothing/presentation/provider/theme_provider.dart';
-import 'package:sailor_clothing/utils/helpers/space_helper.dart';
+import 'package:sailor_clothing/presentation/screens/home.dart';
+import 'package:sailor_clothing/presentation/screens/profile_screen.dart';
+import 'home_screen.dart';
 
-import '../../config/theme/color_schemes.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -25,52 +25,104 @@ class _MyHomePageState extends State<MyHomePage> {
 
     super.initState();
   }
- 
 
-bool dark=false;
+int _currentIndex=0; 
+ List<Widget> screens=[
+  HomeScreen(),
+  ProfileScreen(),
+  ProfileScreen(),
+  Text('sdfs')
+ ];
+
+
   @override
   Widget build(BuildContext context) {
-    final themeProvider= Provider.of<ThemeDataProvider>(context,listen: true);
+
+    final width= ScreenUtil().screenWidth;
+    final height= ScreenUtil().screenHeight;
+
+    log('$width,$height');
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: themeProvider.isDark ? SvgPicture.asset('assets/icons/sailor_dark.svg',height: 45,) : SvgPicture.asset('assets/icons/sailor.svg',height:45),
-        actions: [
-        
-            Switch(
-                activeColor: lightColorScheme.inversePrimary,
-                activeThumbImage:const AssetImage('assets/icons/off.png'),
-                inactiveThumbImage: const AssetImage('assets/icons/on.png'),
-                value: dark, 
-                onChanged: (value){
-                setState(() {
-                  dark = !dark;
-                });
-                themeProvider.darkTheme = dark;
-              }),
-        SpaceHelper.horizontalSpace(2.w),
-        IconButton(
-          splashRadius: 20,
-          onPressed: (){}, 
-          icon: const Icon(CupertinoIcons.search),
-          color: IconTheme.of(context).color,
-          
-          )
+     
+      body: screens[_currentIndex],
+      // Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: <Widget>[
       
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
+      //       Text(
+      //         'Text Theme Title Large',
+      //         style: Theme.of(context).textTheme.titleLarge,
+      //       ),
+      //       SpaceHelper.verticalSpace(5),   
+            
+      //        Text(
+      //         'Text Theme Title Medium',
+      //         style: Theme.of(context).textTheme.titleMedium,
+      //       ),    
+      //       // Text(
+      //       //   'Text Theme Title Large',
+      //       //   style: Theme.of(context).textTheme.titleMedium,
+      //       // ), 
+      
+      //     ],
+      //   ),
+      // ),
 
-          Text(
-            'Text Theme Big',
-            style: Theme.of(context).textTheme.titleLarge,
-          ), 
+    //   bottomNavigationBar:CupertinoTabBar(
+      
+    //   items:<BottomNavigationBarItem> [
+    //   BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
+    //   BottomNavigationBarItem(icon: Icon(Icons.pending_actions_sharp)),
+    // ],
+    // currentIndex: _currentIndex,
+    // onTap: (index){
+    //   setState(() {
+    //     _currentIndex = index;
+    //   });
+    // },
+    // ), 
 
+    bottomNavigationBar: CustomLineIndicatorBottomNavbar(
+         selectedColor: Colors.blue,
+        unSelectedColor: Colors.black54,
+        backgroundColor: Colors.white,
+        currentIndex: _currentIndex,
+        unselectedIconSize: 15,
+        selectedIconSize: 20,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+                enableLineIndicator: true,
+        lineIndicatorWidth: 3,
+        indicatorType: IndicatorType.Top,
+        customBottomBarItems: [
+            CustomBottomBarItems(
+            label: 'Home',
+            icon: Icons.home,
+          ),
+          CustomBottomBarItems(
+            label: 'Account',
+            icon: Icons.account_box_outlined,
+          ),
+          CustomBottomBarItems(
+              label: 'Leaves', icon: Icons.calendar_today_outlined),
+          CustomBottomBarItems(
+            label: 'Loyalty',
+            icon: Icons.card_giftcard_rounded,
+          ),
+          // CustomBottomBarItems(
+          //   label: 'Requests',
+          //   icon: Icons.list,
+          // ),
         ],
-      ),
+    ),
  
     );
+  
+
   }
 }
